@@ -16,8 +16,9 @@
         header { padding: 40px 0; text-align: center; }
         .container { max-width: 800px; width: 90%; }
         .meme-card { background: var(--card-glass); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 24px; margin-bottom: 30px; }
-        .meme-img { width: 100%; border-radius: 16px; margin-bottom: 20px; }
-        .vote-btn { background: var(--btn-grad); border: none; color: white; padding: 15px 30px; border-radius: 50px; cursor: pointer; width: 100%; font-size: 1.1rem; }
+        .meme-img { width: 100%; border-radius: 16px; margin-bottom: 20px; display: block; }
+        .vote-btn { background: var(--btn-grad); border: none; color: white; padding: 15px 30px; border-radius: 50px; cursor: pointer; width: 100%; font-size: 1.1rem; transition: 0.3s; }
+        .vote-btn:hover { transform: scale(1.02); }
     </style>
 </head>
 <body>
@@ -30,36 +31,41 @@
 <div class="container" id="meme-container"></div>
 
 <script>
+    // 使用您指定的去浮水印後圖片連結
     const memeData = [
-        {
-            title: "TikTok 精選",
-            imgUrl: "https://p16-comment-sign-sg.tiktokcdn.com/tos-alisg-i-zt8igodiya-sg/8fdc61dd7228454eb217a9a5caf035b5~tplv-jj85edgx6n-image-medium.jpeg?dr=8569&refresh_token=bf361e5c&x-expires=1782306000&x-signature=VgVuUcOf07ra4beC7OuYpIexTeA%3D&t=67a6c45e&ps=a0626fcd&shp=ff37627b&shcp=ff37627b&idc=my",
-            heat: 2850
-        },
-        {
-            title: "Imgur 網友分享",
-            imgUrl: "https://i.imgur.com/W4XdfyR_d.webp?maxwidth=520&shape=thumb&fidelity=high",
-            heat: 2100
-        },
-        {
-            title: "Facebook 精選",
-            imgUrl: "https://scontent-tpe1-1.xx.fbcdn.net/v/t39.30808-6/705122885_1580248270330103_7938124730336629191_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_ohc=qpAPk4p_USgQ7kNvwHVUPeT&_nc_oc=AdrQZ3J1c66HrP5BwuPTiG_naJ8NOUKL8xKSBxULQViB_fLCC51yu1qcqqN6InDx9pSg4oNYKm233BWcOYNFLcKU&_nc_zt=23&_nc_ht=scontent-tpe1-1.xx&_nc_gid=l9KN6LwrL93kGL_oSlsWcA&_nc_ss=7b2a8&oh=00_Af6He7FEU1-qhfVC-klrZeNtaGzTPajYvwSWBCa8YjUBrg&oe=6A1A25CF",
-            heat: 1850
+        { 
+            title: "百年難得一見的古董", 
+            imgUrl: "http://googleusercontent.com/image_generation_content/1", 
+            heat: 5820 
         }
     ];
 
     const container = document.getElementById('meme-container');
+
     memeData.forEach((item) => {
-        container.innerHTML += `
-            <div class="meme-card">
-                <img src="${item.imgUrl}" class="meme-img" alt="${item.title}">
-                <div class="content-area">
-                    <h3>${item.title}</h3>
-                    <p>目前熱度: ${item.heat} 🔥</p>
-                    <button class="vote-btn" onclick="alert('感謝你的認同！')">UPVOTE THIS MASTERPIECE</button>
-                </div>
+        const card = document.createElement('div');
+        card.className = 'meme-card';
+        
+        card.innerHTML = `
+            <img src="${item.imgUrl}" class="meme-img" alt="${item.title}">
+            <div class="content-area">
+                <h3>${item.title}</h3>
+                <p>目前熱度: <span class="heat-count">${item.heat}</span> 🔥</p>
+                <button class="vote-btn">UPVOTE THIS MASTERPIECE</button>
             </div>
         `;
+
+        const btn = card.querySelector('.vote-btn');
+        const heatSpan = card.querySelector('.heat-count');
+        
+        btn.addEventListener('click', () => {
+            item.heat++;
+            heatSpan.textContent = item.heat;
+            btn.textContent = "感謝你的認同！";
+            btn.style.opacity = "0.7";
+        });
+
+        container.appendChild(card);
     });
 </script>
 
