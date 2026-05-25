@@ -5,227 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔥 爆笑迷因排行榜</title>
     
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9102622234057306" crossorigin="anonymous"></script>
-
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            padding-bottom: 80px; /* 幫底部固定廣告留位子 */
-        }
-        header {
-            background-color: #ffcc00;
-            padding: 25px;
-            font-size: 28px;
-            font-weight: bold;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .container {
-            max-width: 700px;
-            margin: 20px auto;
-            padding: 10px;
-        }
-        /* 迷因卡片優化 */
-        .meme-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
-            margin-bottom: 30px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.2s;
-        }
-        .meme-card:hover {
-            transform: translateY(-3px);
-        }
-        .meme-card h3 {
-            margin-top: 0;
-            color: #333;
-        }
-        .meme-card img {
-            max-width: 100%;
-            border-radius: 8px;
-            border: 1px solid #eee;
-        }
-        .vote-section {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 20px;
-            align-items: center;
-        }
-        .score {
-            font-size: 18px;
-            position: relative;
-        }
-        /* 按鈕視覺與投票後的禁用狀態 */
-        .vote-btn {
-            background-color: #ff4757;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(255, 71, 87, 0.2);
-        }
-        .vote-btn:hover {
-            background-color: #ff6b81;
-            transform: scale(1.05);
-        }
-        .vote-btn:disabled {
-            background-color: #ced6e0;
-            color: #a4b0be;
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
-         
-        /* 廣告區塊優化 */
-        .ad-banner {
-            background-color: #eaf2f8;
-            border: 2px dashed #3498db;
-            border-radius: 8px;
-            color: #2980b9;
-            padding: 20px;
-            margin: 25px 0;
-            font-weight: bold;
-            font-size: 14px;
-            min-height: 90px; /* 給自動廣告留點伸展空間 */
-        }
-
-        /* 底部固定懸浮廣告 */
-        .fixed-bottom-ad {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 10px 0;
-            font-size: 14px;
-            font-weight: bold;
-            border-top: 3px solid #e74c3c;
-            box-shadow: 0 -3px 10px rgba(0,0,0,0.2);
-            z-index: 999;
-        }
-
-        /* 數字跳動特效 */
-        @keyframes countUp {
-            0% { transform: scale(1); color: #ff4757; }
-            50% { transform: scale(1.3); color: #ff4757; font-weight: bold; }
-            100% { transform: scale(1); color: #333; }
-        }
-        .animate-pop {
-            display: inline-block;
-            animation: countUp 0.4s ease-out;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        🔥 2026 最強迷因排行榜
-    </header>
-
-    <div class="container">
-         
-        <div class="ad-banner">
-            🎯 廣告載入中...
-        </div>
-
-        <div class="meme-card">
-            <h3>工程師的日常</h3>
-            <img src="https://via.placeholder.com/600x400?text=Meme+Image+1" alt="迷因圖">
-            <div class="vote-section">
-                <span class="score">熱度：<strong id="score1">150</strong> 🔥</span>
-                <button class="vote-btn" id="btn1" onclick="vote(1)">👍 讚爆它</button>
-            </div>
-        </div>
-
-        <div class="ad-banner">
-            🎯 推薦贊助內容
-        </div>
-
-        <div class="meme-card">
-            <h3>月底吃土的我</h3>
-            <img src="https://via.placeholder.com/600x400?text=Meme+Image+2" alt="迷因圖">
-            <div class="vote-section">
-                <span class="score">熱度：<strong id="score2">89</strong> 🔥</span>
-                <button class="vote-btn" id="btn2" onclick="vote(2)">👍 讚爆它</button>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="fixed-bottom-ad">
-        📢 精彩贊址推薦
-    </div>
-
-    <script>
-        window.onload = function() {
-            checkVoted(1);
-            checkVoted(2);
-        }
-
-        function vote(id) {
-            let scoreElement = document.getElementById('score' + id);
-            let buttonElement = document.getElementById('btn' + id);
-            let currentScore = parseInt(scoreElement.innerText);
-             
-            let newScore = currentScore + 1;
-            scoreElement.innerText = newScore;
-             
-            scoreElement.classList.add('animate-pop');
-            setTimeout(() => {
-                scoreElement.classList.remove('animate-pop');
-            }, 400);
-
-            buttonElement.disabled = true;
-            buttonElement.innerText = "✅ 已投讚";
-
-            localStorage.setItem('voted_meme_' + id, 'true');
-        }
-
-        function checkVoted(id) {
-            if (localStorage.getItem('voted_meme_' + id) === 'true') {
-                let buttonElement = document.getElementById('btn' + id);
-                let scoreElement = document.getElementById('score' + id);
-                 
-                buttonElement.disabled = true;
-                buttonElement.innerText = "✅ 已投讚";
-                scoreElement.innerText = parseInt(scoreElement.innerText) + 1; 
-            }
-        }
-    </script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 爆笑迷因排行榜</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            padding-bottom: 80px; /* 幫底部固定廣告留位子 */<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 爆笑迷因排行榜</title>
+    <meta name="google-adsense-account" content="ca-pub-9102622234057306">
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9102622234057306" crossorigin="anonymous"></script>
 
@@ -236,7 +16,7 @@
             margin: 0;
             padding: 0;
             text-align: center;
-            padding-bottom: 80px; /* 幫底部固定廣告留位子 */
+            padding-bottom: 80px;
         }
         header {
             background-color: #ffcc00;
@@ -250,7 +30,6 @@
             margin: 20px auto;
             padding: 10px;
         }
-        /* 迷因卡片優化 */
         .meme-card {
             background: white;
             border-radius: 12px;
@@ -263,367 +42,66 @@
             transition: transform 0.2s;
         }
         .meme-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
         }
-        .meme-card h3 {
-            margin-top: 0;
+        .meme-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .meme-title {
+            font-size: 20px;
+            font-weight: bold;
             color: #333;
         }
-        .meme-card img {
-            max-width: 100%;
-            border-radius: 8px;
-            border: 1px solid #eee;
+        .stats {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 15px;
         }
-        .vote-section {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 20px;
-            align-items: center;
-        }
-        .score {
-            font-size: 18px;
-            position: relative;
-        }
-        /* 按鈕視覺與投票後的禁用狀態 */
         .vote-btn {
             background-color: #ff4757;
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            cursor: pointer;
+            padding: 10px 25px;
             font-size: 16px;
             font-weight: bold;
-            transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(255, 71, 87, 0.2);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.2s;
         }
         .vote-btn:hover {
-            background-color: #ff6b81;
-            transform: scale(1.05);
-        }
-        .vote-btn:disabled {
-            background-color: #ced6e0;
-            color: #a4b0be;
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
-         
-        /* 廣告區塊優化 */
-        .ad-banner {
-            background-color: #eaf2f8;
-            border: 2px dashed #3498db;
-            border-radius: 8px;
-            color: #2980b9;
-            padding: 20px;
-            margin: 25px 0;
-            font-weight: bold;
-            font-size: 14px;
-            min-height: 90px; /* 給自動廣告留點伸展空間 */
-        }
-
-        /* 底部固定懸浮廣告 */
-        .fixed-bottom-ad {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 10px 0;
-            font-size: 14px;
-            font-weight: bold;
-            border-top: 3px solid #e74c3c;
-            box-shadow: 0 -3px 10px rgba(0,0,0,0.2);
-            z-index: 999;
-        }
-
-        /* 數字跳動特效 */
-        @keyframes countUp {
-            0% { transform: scale(1); color: #ff4757; }
-            50% { transform: scale(1.3); color: #ff4757; font-weight: bold; }
-            100% { transform: scale(1); color: #333; }
-        }
-        .animate-pop {
-            display: inline-block;
-            animation: countUp 0.4s ease-out;
+            background-color: #e84118;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        🔥 2026 最強迷因排行榜
-    </header>
+    <header>🔥 爆笑迷因排行榜</header>
 
     <div class="container">
-         
-        <div class="ad-banner">
-            🎯 廣告載入中...
+        <div class="meme-card">
+            <div class="meme-title">工程師的日常</div>
+            <img class="meme-img" src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=500" alt="迷因圖">
+            <div class="stats">熱度：<span id="hits1">150</span> 🔥</div>
+            <button class="vote-btn" onclick="vote(1)">?? 讚爆它</button>
         </div>
 
         <div class="meme-card">
-            <h3>工程師的日常</h3>
-            <img src="https://via.placeholder.com/600x400?text=Meme+Image+1" alt="迷因圖">
-            <div class="vote-section">
-                <span class="score">熱度：<strong id="score1">150</strong> 🔥</span>
-                <button class="vote-btn" id="btn1" onclick="vote(1)">👍 讚爆它</button>
-            </div>
+            <div class="meme-title">月底吃土的我</div>
+            <img class="meme-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=500" alt="迷因圖">
+            <div class="stats">熱度：<span id="hits2">89</span> 🔥</div>
+            <button class="vote-btn" onclick="vote(2)">?? 讚爆它</button>
         </div>
-
-        <div class="ad-banner">
-            🎯 推薦贊助內容
-        </div>
-
-        <div class="meme-card">
-            <h3>月底吃土的我</h3>
-            <img src="https://via.placeholder.com/600x400?text=Meme+Image+2" alt="迷因圖">
-            <div class="vote-section">
-                <span class="score">熱度：<strong id="score2">89</strong> 🔥</span>
-                <button class="vote-btn" id="btn2" onclick="vote(2)">👍 讚爆它</button>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="fixed-bottom-ad">
-        📢 精彩贊址推薦
     </div>
 
     <script>
-        window.onload = function() {
-            checkVoted(1);
-            checkVoted(2);
-        }
-
         function vote(id) {
-            let scoreElement = document.getElementById('score' + id);
-            let buttonElement = document.getElementById('btn' + id);
-            let currentScore = parseInt(scoreElement.innerText);
-             
-            let newScore = currentScore + 1;
-            scoreElement.innerText = newScore;
-             
-            scoreElement.classList.add('animate-pop');
-            setTimeout(() => {
-                scoreElement.classList.remove('animate-pop');
-            }, 400);
-
-            buttonElement.disabled = true;
-            buttonElement.innerText = "✅ 已投讚";
-
-            localStorage.setItem('voted_meme_' + id, 'true');
-        }
-
-        function checkVoted(id) {
-            if (localStorage.getItem('voted_meme_' + id) === 'true') {
-                let buttonElement = document.getElementById('btn' + id);
-                let scoreElement = document.getElementById('score' + id);
-                 
-                buttonElement.disabled = true;
-                buttonElement.innerText = "✅ 已投讚";
-                scoreElement.innerText = parseInt(scoreElement.innerText) + 1; 
-            }
-        }
-    </script>
-
-</body>
-</html>
-        }
-        header {
-            background-color: #ffcc00;
-            padding: 25px;
-            font-size: 28px;
-            font-weight: bold;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .container {
-            max-width: 700px;
-            margin: 20px auto;
-            padding: 10px;
-        }
-        /* 迷因卡片優化 */
-        .meme-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
-            margin-bottom: 30px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.2s;
-        }
-        .meme-card:hover {
-            transform: translateY(-3px);
-        }
-        .meme-card h3 {
-            margin-top: 0;
-            color: #333;
-        }
-        .meme-card img {
-            max-width: 100%;
-            border-radius: 8px;
-            border: 1px solid #eee;
-        }
-        .vote-section {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 20px;
-            align-items: center;
-        }
-        .score {
-            font-size: 18px;
-            position: relative;
-        }
-        /* 按鈕視覺與投票後的禁用狀態 */
-        .vote-btn {
-            background-color: #ff4757;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(255, 71, 87, 0.2);
-        }
-        .vote-btn:hover {
-            background-color: #ff6b81;
-            transform: scale(1.05);
-        }
-        .vote-btn:disabled {
-            background-color: #ced6e0;
-            color: #a4b0be;
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
-        
-        /* 廣告區塊優化 */
-        .ad-banner {
-            background-color: #eaf2f8;
-            border: 2px dashed #3498db;
-            border-radius: 8px;
-            color: #2980b9;
-            padding: 20px;
-            margin: 25px 0;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        /* 底部固定懸浮廣告（吸金黃金位） */
-        .fixed-bottom-ad {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 10px 0;
-            font-size: 14px;
-            font-weight: bold;
-            border-top: 3px solid #e74c3c;
-            box-shadow: 0 -3px 10px rgba(0,0,0,0.2);
-            z-index: 999;
-        }
-
-        /* 數字跳動特效 */
-        @keyframes countUp {
-            0% { transform: scale(1); color: #ff4757; }
-            50% { transform: scale(1.3); color: #ff4757; font-weight: bold; }
-            100% { transform: scale(1); color: #333; }
-        }
-        .animate-pop {
-            display: inline-block;
-            animation: countUp 0.4s ease-out;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        🔥 2026 最強迷因排行榜
-    </header>
-
-    <div class="container">
-        
-        <div class="ad-banner">
-            [ 廣告版位：頂部橫幅廣告 728x90 或 自動廣告 ]
-            </div>
-
-        <div class="meme-card">
-            <h3>工程師的日常</h3>
-            <img src="https://via.placeholder.com/600x400?text=Meme+Image+1" alt="迷因圖">
-            <div class="vote-section">
-                <span class="score">熱度：<strong id="score1">150</strong> 🔥</span>
-                <button class="vote-btn" id="btn1" onclick="vote(1)">👍 讚爆它</button>
-            </div>
-        </div>
-
-        <div class="ad-banner">
-            [ 廣告版位：文章內嵌原生廣告 ]
-            </div>
-
-        <div class="meme-card">
-            <h3>月底吃土的我</h3>
-            <img src="https://via.placeholder.com/600x400?text=Meme+Image+2" alt="迷因圖">
-            <div class="vote-section">
-                <span class="score">熱度：<strong id="score2">89</strong> 🔥</span>
-                <button class="vote-btn" id="btn2" onclick="vote(2)">👍 讚爆它</button>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="fixed-bottom-ad">
-        [ 廣告版位：底部固定懸浮廣告（建議使用行動裝置錨定廣告）]
-        </div>
-
-    <script>
-        // 網頁載入時，先檢查使用者以前有沒有投過票
-        window.onload = function() {
-            checkVoted(1);
-            checkVoted(2);
-        }
-
-        function vote(id) {
-            let scoreElement = document.getElementById('score' + id);
-            let buttonElement = document.getElementById('btn' + id);
-            let currentScore = parseInt(scoreElement.innerText);
-            
-            // 票數 + 1
-            let newScore = currentScore + 1;
-            scoreElement.innerText = newScore;
-            
-            // 加入數字放大特效
-            scoreElement.classList.add('animate-pop');
-            setTimeout(() => {
-                scoreElement.classList.remove('animate-pop');
-            }, 400);
-
-            // 禁用按鈕，防止重複點擊
-            buttonElement.disabled = true;
-            buttonElement.innerText = "✅ 已投讚";
-
-            // 把投票紀錄儲存在使用者的瀏覽器裡 (localStorage)
-            localStorage.setItem('voted_meme_' + id, 'true');
-        }
-
-        // 檢查是否投過票的機制
-        function checkVoted(id) {
-            if (localStorage.getItem('voted_meme_' + id) === 'true') {
-                let buttonElement = document.getElementById('btn' + id);
-                let scoreElement = document.getElementById('score' + id);
-                
-                // 如果投過票，一進網頁就把按鈕鎖定，並把數字加 1（模擬實際狀況）
-                buttonElement.disabled = true;
-                buttonElement.innerText = "✅ 已投讚";
-                scoreElement.innerText = parseInt(scoreElement.innerText) + 1; 
-            }
+            let element = document.getElementById('hits' + id);
+            let currentHits = parseInt(element.innerText);
+            element.innerText = currentHits + 1;
+            alert('感謝投票！這張迷因更火了！');
         }
     </script>
 
