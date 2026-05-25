@@ -1,109 +1,301 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 爆笑迷因排行榜</title>
-    
-    <meta name="google-adsense-account" content="ca-pub-9102622234057306">
-    
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9102622234057306" crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meme Hub Dashboard | 🔥 最強爆笑迷因排行榜</title>
+<meta name="google-adsense-account" content="ca-pub-9102622234057306">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9102622234057306" crossorigin="anonymous"></script>
 
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            padding-bottom: 80px;
-        }
-        header {
-            background-color: #ffcc00;
-            padding: 25px;
-            font-size: 28px;
-            font-weight: bold;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .container {
-            max-width: 700px;
-            margin: 20px auto;
-            padding: 10px;
-        }
-        .meme-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
-            margin-bottom: 30px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.2s;
-        }
-        .meme-card:hover {
-            transform: translateY(-5px);
-        }
-        .meme-img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: 15px 0;
-        }
-        .meme-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #333;
-        }
-        .stats {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 15px;
-        }
-        .vote-btn {
-            background-color: #ff4757;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .vote-btn:hover {
-            background-color: #e84118;
-        }
-    </style>
+<style>
+    :root {
+        --bg-color: #1a1a1c;
+        --card-bg: #2d2d30;
+        --text-primary: #e0e0e3;
+        --text-secondary: #9a9a9d;
+        --accent-purple: #9c27b0;
+        --accent-pink: #e91e63;
+        --gradient-btn: linear-gradient(45deg, #e91e63, #9c27b0);
+        --gradient-heat: linear-gradient(90deg, #ff9800, #e91e63, #9c27b0);
+        --border-color: rgba(255, 255, 255, 0.05);
+        --shadow-card: 0 10px 30px rgba(0,0,0,0.3);
+        --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        font-family: var(--font-family);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    /* 頂部標題列 */
+    header {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 15px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid var(--border-color);
+        position: fixed;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+    }
+
+    .header-logo {
+        height: 30px;
+        margin-right: 15px;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    /* 主內容區 */
+    .container {
+        max-width: 900px;
+        width: 90%;
+        margin: 100px auto 50px auto; /* 避開固定頂部欄 */
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 20px;
+    }
+
+    /* 迷因卡片樣式 */
+    .meme-card {
+        background-color: var(--card-bg);
+        border-radius: 20px;
+        box-shadow: var(--shadow-card);
+        padding: 30px;
+        position: relative;
+        border: 1px solid var(--border-color);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+    }
+
+    .meme-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 15px rgba(156, 39, 176, 0.1);
+    }
+
+    /* 卡片裝飾圖示 */
+    .corner-icon {
+        position: absolute;
+        font-size: 18px;
+        color: var(--text-secondary);
+        opacity: 0.3;
+    }
+    .top-left { top: 20px; left: 20px; }
+    .top-right { top: 20px; right: 20px; }
+    .bottom-left { bottom: 20px; left: 20px; }
+    .bottom-right { bottom: 20px; right: 20px; }
+
+    /* 卡片標題 */
+    .meme-title {
+        font-size: 20px;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 25px;
+        color: var(--text-primary);
+        letter-spacing: 0.5px;
+    }
+
+    /* 圖片容器 */
+    .image-container {
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 25px;
+        border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .meme-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.5s ease;
+    }
+
+    .meme-card:hover .meme-img {
+        transform: scale(1.02);
+    }
+
+    /* 熱度區域樣式 */
+    .heat-bar-container {
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        border: 1px solid var(--border-color);
+    }
+
+    .stats {
+        font-size: 14px;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+    }
+
+    .stats .hits-count {
+        font-weight: 700;
+        color: var(--text-primary);
+        font-size: 18px;
+        margin: 0 8px;
+    }
+
+    .tier-label {
+        font-size: 12px;
+        color: var(--accent-pink);
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    /* 3D 效果按鈕 */
+    .vote-btn {
+        width: 100%;
+        background: var(--gradient-btn);
+        color: white;
+        border: none;
+        padding: 18px;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 30px;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+        box-shadow: 0 4px 0px #7b1f8c, 0 8px 15px rgba(0,0,0,0.3);
+        transition: all 0.1s ease;
+        outline: none;
+    }
+
+    .vote-btn:hover {
+        opacity: 0.95;
+    }
+
+    .vote-btn:active {
+        box-shadow: 0 1px 0px #7b1f8c, 0 4px 10px rgba(0,0,0,0.3);
+        transform: translateY(3px);
+    }
+
+    /* 底部欄 */
+    footer {
+        width: 100%;
+        padding: 30px 0;
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-secondary);
+        border-top: 1px solid var(--border-color);
+        background-color: rgba(0, 0, 0, 0.3);
+        margin-top: auto;
+    }
+
+    @media (max-width: 600px) {
+        .container { gap: 25px; margin-top: 90px; }
+        .meme-card { padding: 20px; }
+        .vote-btn { font-size: 14px; padding: 15px; }
+    }
+</style>
 </head>
 <body>
 
-    <header>🔥 爆笑迷因排行榜</header>
+<header>
+    <img src="https://via.placeholder.com/30x30?text=M" alt="M" class="header-logo">
+    <h1>Meme Hub</h1>
+</header>
 
-    <div class="container">
-        <div class="meme-card">
-            <div class="meme-title">工程師的日常</div>
-            <img class="meme-img" src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=500" alt="迷因圖">
-            <div class="stats">熱度：<span id="hits1">150</span> 🔥</div>
-            <button class="vote-btn" onclick="vote(1)">?? 讚爆它</button>
+<div class="container">
+    <div class="meme-card">
+        <span class="corner-icon top-left">🏆</span>
+        <span class="corner-icon top-right">💻</span>
+        <span class="corner-icon bottom-left">⚙️</span>
+        <span class="corner-icon bottom-right">😄</span>
+
+        <div class="meme-title">Meme ranking: Engineer Life (Tech)</div>
+        
+        <div class="image-container">
+            <img class="meme-img" src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1000&auto=format&fit=crop" alt="Engineer Life Meme">
         </div>
 
-        <div class="meme-card">
-            <div class="meme-title">月底吃土的我</div>
-            <img class="meme-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=500" alt="迷因圖">
-            <div class="stats">熱度：<span id="hits2">89</span> 🔥</div>
-            <button class="vote-btn" onclick="vote(2)">?? 讚爆它</button>
+        <div class="heat-bar-container">
+            <div class="stats">
+                <span>🔥 HEAT:</span>
+                <span id="hits1" class="hits-count">1520</span>
+                <span class="tier-label">(TOP TIER)</span>
+            </div>
         </div>
+
+        <button class="vote-btn" onclick="vote(1, 1520)">?? UPVOTE THIS MASTERPIECE</button>
     </div>
 
-    <script>
-        function vote(id) {
-            let element = document.getElementById('hits' + id);
-            let currentHits = parseInt(element.innerText);
-            element.innerText = currentHits + 1;
-            alert('感謝投票！這張迷因更火了！');
-        }
-    </script>
+    <div class="meme-card">
+        <span class="corner-icon top-left">📈</span>
+        <span class="corner-icon top-right">📉</span>
+        <span class="corner-icon bottom-left">📊</span>
+        <span class="corner-icon bottom-right">😣</span>
+
+        <div class="meme-title">Meme ranking: End of Month Meals (Broketober)</div>
+        
+        <div class="image-container">
+            <img class="meme-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop" alt="Broketober Meme">
+        </div>
+
+        <div class="heat-bar-container">
+            <div class="stats">
+                <span>🔥 HEAT:</span>
+                <span id="hits2" class="hits-count">894</span>
+                <span class="tier-label">(TRENDING)</span>
+            </div>
+        </div>
+
+        <button class="vote-btn" onclick="vote(2, 894)">?? UPVOTE THIS RELATABLE PAIN</button>
+    </div>
+</div>
+
+<footer>
+    <div>Meme Hub © 2024</div>
+    </footer>
+
+<script>
+    // 简单的投票功能
+    function vote(id, baseValue) {
+        let element = document.getElementById('hits' + id);
+        let currentHits = parseInt(element.innerText.replace(/,/g, ''));
+        element.innerText = (currentHits + 1).toLocaleString();
+        
+        // 可選：可以加上按鈕點擊後的特效
+        let btn = event.target;
+        btn.innerText = "THANKS FOR VOTING! 🔥";
+        btn.style.opacity = "0.7";
+        btn.disabled = true;
+        
+        // 1秒後恢復
+        setTimeout(() => {
+            if (id === 1) {
+                btn.innerText = "?? UPVOTE THIS MASTERPIECE";
+            } else {
+                btn.innerText = "?? UPVOTE THIS RELATABLE PAIN";
+            }
+            btn.style.opacity = "1";
+            btn.disabled = false;
+        }, 1000);
+    }
+</script>
 
 </body>
 </html>
