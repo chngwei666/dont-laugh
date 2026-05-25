@@ -1,71 +1,24 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meme Hub | 每兩週精選爆笑排行榜</title>
-<meta name="google-adsense-account" content="ca-pub-9102622234057306">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9102622234057306" crossorigin="anonymous"></script>
-
-<style>
-    :root {
-        --bg-deep: #0f0f12;
-        --card-glass: rgba(30, 30, 35, 0.7);
-        --text-main: #f8f9fa;
-        --text-sub: #a0a0a5;
-        --btn-grad: linear-gradient(135deg, #ff416c, #ff4b2b);
-    }
-
-    body {
-        background-color: var(--bg-deep);
-        color: var(--text-main);
-        font-family: 'Inter', -apple-system, sans-serif;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-image: radial-gradient(circle at top right, #1d1d28, transparent);
-    }
-
-    header { padding: 40px 0; text-align: center; }
-    header h1 { font-size: 2.5rem; margin: 0; background: linear-gradient(to right, #fff, #a0a0a5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-    .container { max-width: 800px; width: 90%; margin-bottom: 50px; }
-
-    .meme-card {
-        background: var(--card-glass);
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 24px;
-        padding: 24px;
-        margin-bottom: 30px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    }
-
-    .meme-img { 
-        width: 100%; 
-        border-radius: 16px; 
-        margin-bottom: 20px; 
-        transition: 0.4s; 
-    }
-    
-    .content-area { text-align: center; }
-
-    .vote-btn {
-        background: var(--btn-grad);
-        border: none;
-        color: white;
-        padding: 15px 30px;
-        border-radius: 50px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: 0.3s;
-        width: 100%;
-        font-size: 1.1rem;
-    }
-
-    .vote-btn:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(255, 75, 43, 0.4); }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Hub | 每兩週精選爆笑排行榜</title>
+    <style>
+        :root {
+            --bg-deep: #0f0f12;
+            --card-glass: rgba(30, 30, 35, 0.7);
+            --text-main: #f8f9fa;
+            --text-sub: #a0a0a5;
+            --btn-grad: linear-gradient(135deg, #ff416c, #ff4b2b);
+        }
+        body { background-color: var(--bg-deep); color: var(--text-main); font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; }
+        header { padding: 40px 0; text-align: center; }
+        .container { max-width: 800px; width: 90%; }
+        .meme-card { background: var(--card-glass); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 24px; margin-bottom: 30px; }
+        .meme-img { width: 100%; border-radius: 16px; margin-bottom: 20px; }
+        .vote-btn { background: var(--btn-grad); border: none; color: white; padding: 15px 30px; border-radius: 50px; cursor: pointer; width: 100%; font-size: 1.1rem; }
+    </style>
 </head>
 <body>
 
@@ -77,12 +30,22 @@
 <div class="container" id="meme-container"></div>
 
 <script>
-    // --- 梗圖資料庫 ---
+    // 這裡放入最新的精選梗圖連結
     const memeData = [
         {
-            title: "今日精選梗圖",
+            title: "您的 TikTok 精選",
             imgUrl: "https://p16-comment-sign-sg.tiktokcdn.com/tos-alisg-i-zt8igodiya-sg/8fdc61dd7228454eb217a9a5caf035b5~tplv-jj85edgx6n-image-medium.jpeg?dr=8569&refresh_token=bf361e5c&x-expires=1782306000&x-signature=VgVuUcOf07ra4beC7OuYpIexTeA%3D&t=67a6c45e&ps=a0626fcd&shp=ff37627b&shcp=ff37627b&idc=my",
             heat: 2850
+        },
+        {
+            title: "經典：這就是生活 (This is fine)",
+            imgUrl: "https://i.imgur.com/k4O7214.png",
+            heat: 4500
+        },
+        {
+            title: "當週上班族心聲",
+            imgUrl: "https://i.imgur.com/O6L8XhW.jpeg",
+            heat: 3200
         }
     ];
 
@@ -90,7 +53,7 @@
     memeData.forEach((item) => {
         container.innerHTML += `
             <div class="meme-card">
-                <img src="${item.imgUrl}" class="meme-img" alt="梗圖">
+                <img src="${item.imgUrl}" class="meme-img" alt="${item.title}">
                 <div class="content-area">
                     <h3>${item.title}</h3>
                     <p>目前熱度: ${item.heat} 🔥</p>
