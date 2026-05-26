@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meme Hub | 全球頂尖迷因排行榜與即時梗圖生成</title>
     
+    <link rel="icon" type="image/x-icon" href="YOUR_IMAGE_URL_HERE">
+    <link rel="apple-touch-icon" href="YOUR_IMAGE_URL_HERE">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Noto+Sans+TC:wght@700;900&display=swap" rel="stylesheet">
@@ -82,4 +85,42 @@
             font-weight: 800;
             letter-spacing: -1.5px;
             margin-bottom: 12px;
-            background: linear-gradient(
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* 主容器 */
+        .container { 
+            max-width: 640px; 
+            width: 92%; 
+            padding-bottom: 80px;
+        }
+
+        /* 專業區塊標題 */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .section-header i { color: #ff3366; }
+
+        /* 排行榜卡片組件 */
+        .meme-card { 
+            position: relative;
+            background: var(--bg-surface); 
+            backdrop-filter: blur(30px); 
+            -webkit-backdrop-filter: blur(30px);
