@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
         :root {
@@ -20,10 +20,9 @@
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --shadow-luxury: 0 20px 40px rgba(0, 0, 0, 0.7);
-            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* 全域重設與效能優化 */
+        /* 全域重設 */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -55,12 +54,6 @@
             z-index: -1;
             pointer-events: none;
         }
-
-        /* 客製化現代滾動條 */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-base); }
-        ::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #333; }
 
         /* 導覽與標頭層 */
         header { 
@@ -107,7 +100,7 @@
             padding-bottom: 80px;
         }
 
-        /* 卡片組件：標準高階玻璃擬真（已修復誤刪） */
+        /* 卡片組件 */
         .meme-card { 
             position: relative;
             background: var(--bg-surface); 
@@ -118,7 +111,7 @@
             padding: 24px; 
             margin-bottom: 30px; 
             box-shadow: var(--shadow-luxury);
-            will-change: transform, box-shadow;
+            will-change: transform;
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
@@ -128,7 +121,7 @@
             box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255, 51, 102, 0.05);
         }
 
-        /* 競賽排名標籤（已修復誤刪） */
+        /* 競賽排名標籤 */
         .rank-tag {
             position: absolute;
             top: 24px;
@@ -147,7 +140,7 @@
             gap: 6px;
         }
 
-        /* 圖像外框優化（已修復誤刪） */
+        /* 圖像外框優化 */
         .meme-viewport {
             width: 100%;
             border-radius: 16px;
@@ -259,4 +252,129 @@
 
         .btn-share:hover {
             background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 頁腳宣告 */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border-subtle);
+            width: 100%;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <span class="badge">BI-WEEKLY TRENDS</span>
+    <h1>Meme Hub Premium</h1>
+    <p>匯聚全球社群網絡數據，經由核心演算法與使用者權重精選之即時熱度指標榜單。</p>
+</header>
+
+<div class="container" id="meme-container"></div>
+
+<footer>
+    <p>© 2026 Meme Hub Analytics Inc. All rights reserved.</p>
+</footer>
+
+<script>
+    // 資料結構
+    const memeData = [
+        { id: "m-001", platform: "TikTok", title: "跨世代共鳴：當代職場行為學精選", imgUrl: "https://p16-comment-sign-sg.tiktokcdn.com/tos-alisg-i-zt8igodiya-sg/8fdc61dd7228454eb217a9a5caf035b5~tplv-jj85edgx6n-image-medium.jpeg?dr=8569&refresh_token=bf361e5c&x-expires=1782306000&x-signature=VgVuUcOf07ra4beC7OuYpIexTeA%3D&t=67a6c45e&ps=a0626fcd&shp=ff37627b&shcp=ff37627b&idc=my", heat: 2850 },
+        { id: "m-002", platform: "Imgur", title: "海外論壇高分神作：演算法的終極諷刺", imgUrl: "https://i.imgur.com/W4XdfyR_d.webp?maxwidth=520&shape=thumb&fidelity=high", heat: 2100 },
+        { id: "m-003", platform: "Facebook", title: "社群核心擴散：迷因骨灰級玩家經典複刻", imgUrl: "https://scontent-tpe1-1.xx.fbcdn.net/v/t39.30808-6/705122885_1580248270330103_7938124730336629191_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_ohc=qpAPk4p_USgQ7kNvwHVUPeT&_nc_oc=AdrQZ3J1c66HrP5BwuPTiG_naJ8NOUKL8xKSBxULQViB_fLCC51yu1qcqqN6InDx9pSg4oNYKm233BWcOYNFLcKU&_nc_zt=23&_nc_ht=scontent-tpe1-1.xx&_nc_gid=l9KN6LwrL93kGL_oSlsWcA&_nc_ss=7b2a8&oh=00_Af6He7FEU1-qhfZE-klrZeNtaGzTPajYvwSWBCa8YjUBrg&oe=6A1A25CF", heat: 1850 }
+    ];
+
+    const container = document.getElementById('meme-container');
+
+    memeData.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'meme-card';
+        
+        // 【✅ 已安全化】移除所有不穩定的靜態 JS 選擇器，改為全純文字安全骨架結構
+        card.innerHTML = `
+            <div class="rank-tag">
+                <i class="fa-solid fa-trophy" style="color: #ffca28;"></i>
+                <span>TOP 0${index + 1}</span>
+            </div>
+            <div class="meme-viewport">
+                <img src="${item.imgUrl}" class="meme-img" alt="Meme Media" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop'">
+            </div>
+            <div class="content-meta">
+                <h3 class="meme-title"></h3>
+                <div class="status-bar">
+                    <div class="heat-indicator">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>來源渠道: <strong class="meme-platform"></strong></span>
+                    </div>
+                    <div class="heat-indicator">
+                        <span>熱度權重:</span>
+                        <span class="heat-count"></span>
+                    </div>
+                </div>
+                <div class="action-group">
+                    <button class="btn-vote" aria-label="投票支持">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>UPVOTE MASTERPIECE</span>
+                    </button>
+                    <button class="btn-share" aria-label="分享此項目">
+                        <i class="fa-solid fa-share-nodes"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // 注入安全資料 (此段絕對不會報錯)
+        card.querySelector('.meme-title').textContent = item.title;
+        card.querySelector('.meme-platform').textContent = item.platform;
+        
+        const voteBtn = card.querySelector('.btn-vote');
+        const shareBtn = card.querySelector('.btn-share');
+        const heatSpan = card.querySelector('.heat-count');
+        
+        heatSpan.textContent = item.heat.toLocaleString();
+
+        // 投票點擊
+        voteBtn.addEventListener('click', () => {
+            item.heat++;
+            heatSpan.textContent = item.heat.toLocaleString();
+            
+            voteBtn.disabled = true;
+            voteBtn.style.background = '#16161e';
+            voteBtn.innerHTML = `<span>VERIFIED VISITOR VOTE</span>`;
+            
+            if (navigator.vibrate) navigator.vibrate(12);
+        });
+
+        // 分享按鈕
+        shareBtn.addEventListener('click', async () => {
+            const shareData = {
+                title: `Meme Hub | ${item.title}`,
+                text: `這張迷因太神了，快來 Meme Hub 幫它投下一票！`,
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {}
+            } else {
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    alert('連結已成功複製至剪貼簿！');
+                } catch (err) {
+                    console.error('無法複製連結');
+                }
+            }
+        });
+
+        container.appendChild(card);
+    });
+</script>
+
+</body>
+</html>
