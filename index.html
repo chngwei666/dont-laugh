@@ -20,7 +20,6 @@
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --shadow-luxury: 0 20px 40px rgba(0, 0, 0, 0.7);
-            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* 全域重設與效能優化 */
@@ -103,54 +102,4 @@
         /* 主容器 */
         .container { 
             max-width: 640px; 
-            width: 92%; 
-            padding-bottom: 80px;
-        }
-
-        /* 卡片組件：標準高階玻璃擬真 */
-        .meme-card { 
-            position: relative;
-            background: var(--bg-surface); 
-            backdrop-filter: blur(30px); 
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--border-subtle); 
-            border-radius: 24px; 
-            padding: 24px; 
-            margin-bottom: 30px; 
-            box-shadow: var(--shadow-luxury);
-            will-change: transform, box-shadow;
-            transition: var(--transition-smooth);
-        }
-
-        .meme-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255, 51, 102, 0.05);
-        }
-
-        /* 競賽排名標籤 */
-        .rank-tag {
-            position: absolute;
-            top: 24px;
-            left: 24px;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 6px 14px;
-            border-radius: 100px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* 圖像容器優化（防止佈局偏移 CLS） */
-        .meme-viewport {
-            width: 100%;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            background:
+            width: 9
