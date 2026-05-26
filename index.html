@@ -20,6 +20,7 @@
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --shadow-luxury: 0 20px 40px rgba(0, 0, 0, 0.7);
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* 全域重設與效能優化 */
@@ -102,4 +103,160 @@
         /* 主容器 */
         .container { 
             max-width: 640px; 
-            width: 9
+            width: 92%; 
+            padding-bottom: 80px;
+        }
+
+        /* 卡片組件：標準高階玻璃擬真（已修復誤刪） */
+        .meme-card { 
+            position: relative;
+            background: var(--bg-surface); 
+            backdrop-filter: blur(30px); 
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--border-subtle); 
+            border-radius: 24px; 
+            padding: 24px; 
+            margin-bottom: 30px; 
+            box-shadow: var(--shadow-luxury);
+            will-change: transform, box-shadow;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .meme-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255, 51, 102, 0.05);
+        }
+
+        /* 競賽排名標籤（已修復誤刪） */
+        .rank-tag {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 圖像外框優化（已修復誤刪） */
+        .meme-viewport {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background: #111115;
+            aspect-ratio: 16 / 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .meme-img { 
+            width: 100%; 
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .meme-card:hover .meme-img {
+            transform: scale(1.03);
+        }
+
+        /* 內容與資訊欄排版 */
+        .content-meta h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .heat-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .heat-count {
+            color: #ff3366;
+            font-weight: 800;
+            font-size: 1.05rem;
+        }
+
+        /* 功能按鈕組 */
+        .action-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-vote { 
+            flex: 1;
+            background: var(--brand-primary); 
+            border: none; 
+            color: white; 
+            padding: 16px 28px; 
+            border-radius: 14px; 
+            cursor: pointer; 
+            font-size: 0.95rem; 
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.2);
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-vote:hover:not(:disabled) { 
+            box-shadow: 0 8px 25px rgba(255, 51, 102, 0.4);
+            opacity: 0.95;
+        }
+
+        .btn-vote:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .btn-vote:disabled {
+            background: #1c1c24;
+            color: #55555a;
+            border: 1px solid rgba(255,255,255,0.02);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-share {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .btn-share:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0
