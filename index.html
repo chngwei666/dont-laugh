@@ -158,6 +158,8 @@
 
         .btn-group {
             display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 10px;
             margin-top: 15px;
         }
@@ -166,7 +168,7 @@
             background: var(--brand-cyber);
             color: #050508;
             border: none;
-            padding: 12px 25px;
+            padding: 12px 20px;
             font-size: 0.95rem;
             font-weight: 900;
             border-radius: 12px;
@@ -177,7 +179,7 @@
         .btn-danger {
             background: var(--brand-danger);
             color: #fff;
-            box-shadow: 0 0 15px rgba(ff, 8, 68, 0.3);
+            box-shadow: 0 0 15px rgba(255, 8, 68, 0.3);
         }
 
         .btn-outline {
@@ -187,9 +189,16 @@
             box-shadow: none;
         }
 
+        .btn-outline-neutral {
+            background: transparent;
+            color: #b0bec5;
+            border: 2px solid #b0bec5;
+            box-shadow: none;
+        }
+
         /* 排行榜與輸入框專屬樣式 */
         .record-input-group {
-            display: none; /* 預設隱藏，破紀錄才顯示 */
+            display: none; 
             flex-direction: column;
             gap: 10px;
             margin-top: 15px;
@@ -284,7 +293,7 @@
             <h2 class="panel-title" style="color: #ffca28;">🏆 英雄榜 Top 5</h2>
             <div class="leaderboard-list" id="lb-list">
                 </div>
-            <button class="btn-cyber" id="btn-close-lb">返回主選單</button>
+            <button class="btn-cyber" id="btn-close-lb">返回上一頁</button>
         </div>
 
         <div class="panel-overlay" id="over-panel" style="display: none;">
@@ -293,13 +302,17 @@
             
             <div class="record-input-group" id="record-input-area">
                 <p style="color:#00e676; font-weight:900; font-size:0.9rem;">🎉 打破紀錄！進入 Top 5！</p>
-                <input type="text" id="player-name" class="name-input" placeholder="輸入你的大名 (最長8字)" maxlength="8" autocomplete="off">
-                <button class="btn-cyber" id="btn-save-record">儲存成績並重玩</button>
+                <input type="text" id="player-name" class="name-input" placeholder="輸入你的大名 (最長8字)" maxlength="8" autocomplete="off" style="pointer-events: auto;">
+                <div class="btn-group" style="margin-top: 5px;">
+                    <button class="btn-cyber" id="btn-save-record">儲存並重玩</button>
+                    <button class="btn-cyber btn-outline-neutral" id="btn-save-home">儲存並回主選單</button>
+                </div>
             </div>
 
             <div class="btn-group" id="normal-restart-area">
-                <button class="btn-cyber btn-danger" id="btn-restart">重新初始化</button>
+                <button class="btn-cyber btn-danger" id="btn-restart">重新開始</button>
                 <button class="btn-cyber btn-outline" id="btn-over-lb">查看排行</button>
+                <button class="btn-cyber btn-outline-neutral" id="btn-home">回主選單</button>
             </div>
         </div>
     </div>
@@ -330,11 +343,16 @@
     const btnCloseLb = document.getElementById('btn-close-lb');
     const btnOverLb = document.getElementById('btn-over-lb');
     const btnSaveRecord = document.getElementById('btn-save-record');
+    const btnHome = document.getElementById('btn-home');
+    const btnSaveHome = document.getElementById('btn-save-home');
     
     // 狀態數值 UI
     const currentScoreEl = document.getElementById('current-score');
     const uiLevel = document.getElementById('ui-level');
     const uiLives = document.getElementById('ui-lives');
+
+    // 用來記錄是從哪個畫面開啟排行榜的
+    let lastActivePanel = menuPanel;
 
     // --- 排行榜核心系統 ---
     const MAX_LB_SIZE = 5;
@@ -381,19 +399,41 @@
 
     // 面板切換事件
     btnShowLb.addEventListener('click', () => {
+        lastActivePanel = menuPanel;
         menuPanel.style.display = 'none';
         renderLeaderboard();
         lbPanel.style.display = 'flex';
     });
+    
     btnOverLb.addEventListener('click', () => {
+        lastActivePanel = overPanel;
         overPanel.style.display = 'none';
         renderLeaderboard();
         lbPanel.style.display = 'flex';
     });
+    
     btnCloseLb.addEventListener('click', () => {
         lbPanel.style.display = 'none';
-        // 如果遊戲還沒開始就回主選單，不然其實也可以設計直接重玩
-        menuPanel.style.display = 'flex'; 
+        lastActivePanel.style.display = 'flex';
+    });
+
+    // 返回主選單按鈕事件
+    btnHome.addEventListener('click', () => {
+        overPanel.style.display = 'none';
+        menuPanel.style.display = 'flex';
+    });
+
+    // 儲存紀錄並重新開始
+    btnSaveRecord.addEventListener('click', () => {
+        saveToLeaderboard(playerNameInput.value, score, level);
+        actionInitialize();
+    });
+
+    // 儲存紀錄並返回主選單
+    btnSaveHome.addEventListener('click', () => {
+        saveToLeaderboard(playerNameInput.value, score, level);
+        overPanel.style.display = 'none';
+        menuPanel.style.display = 'flex';
     });
 
     // 遊戲圖片
@@ -470,7 +510,9 @@
             player.targetX = coords.x; player.targetY = coords.y;
         }
     });
+    
     canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault(); 
         if (!isPlaying || e.touches.length === 0) return;
         const touch = e.touches[0];
         const coords = getEventCoords(touch.clientX, touch.clientY);
@@ -479,12 +521,14 @@
         } else {
             player.targetX = coords.x; player.targetY = coords.y;
         }
-    });
+    }, { passive: false });
+    
     canvas.addEventListener('touchmove', (e) => {
+        e.preventDefault(); 
         if (!isPlaying || e.touches.length === 0) return;
         const coords = getEventCoords(e.touches[0].clientX, e.touches[0].clientY);
         player.targetX = coords.x; player.targetY = coords.y;
-    });
+    }, { passive: false });
 
     function updateLivesDisplay() {
         let hearts = "";
@@ -494,18 +538,12 @@
 
     btnStart.addEventListener('click', actionInitialize);
     btnRestart.addEventListener('click', actionInitialize);
-    
-    // 儲存紀錄並重新開始
-    btnSaveRecord.addEventListener('click', () => {
-        saveToLeaderboard(playerNameInput.value, score, level);
-        actionInitialize();
-    });
 
     function actionInitialize() {
         menuPanel.style.display = 'none';
         overPanel.style.display = 'none';
         lbPanel.style.display = 'none';
-        playerNameInput.value = ''; // 清空輸入框
+        playerNameInput.value = ''; 
 
         isPlaying = true;
         score = 0; level = 1; lives = 3;
@@ -531,11 +569,10 @@
         setTimeout(() => {
             overPerf.innerHTML = `達陣 <strong style="color:#ffca28;">Lv.${level}</strong><br>存活時間：<strong style="color:#00f2fe;">${score.toFixed(2)} 秒</strong>！`;
             
-            // 判斷是否破紀錄
             if (checkIsTopRecord(score)) {
                 recordInputArea.style.display = 'flex';
                 normalRestartArea.style.display = 'none';
-                playerNameInput.focus(); // 自動聚焦輸入框
+                setTimeout(() => playerNameInput.focus(), 100); 
             } else {
                 recordInputArea.style.display = 'none';
                 normalRestartArea.style.display = 'flex';
