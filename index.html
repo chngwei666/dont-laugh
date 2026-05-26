@@ -138,4 +138,410 @@
             top: 24px;
             left: 24px;
             background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(10px
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .meme-viewport {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background: #111115;
+            aspect-ratio: 16 / 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .meme-img { 
+            width: 100%; 
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .content-meta h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .heat-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .heat-count {
+            color: #ff3366;
+            font-weight: 800;
+            font-size: 1.05rem;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary { 
+            background: var(--brand-primary); 
+            color: white; 
+            padding: 16px 28px; 
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.2);
+        }
+
+        .btn-primary:hover:not(:disabled) { 
+            box-shadow: 0 8px 25px rgba(255, 51, 102, 0.4);
+            opacity: 0.95;
+        }
+
+        .btn-vote:disabled {
+            background: #1c1c24;
+            color: #55555a;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-upload-label {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+            width: 52px;
+            height: 52px;
+        }
+
+        .btn-upload-label:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 梗圖生成器 */
+        .generator-card {
+            background: var(--bg-surface);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--shadow-luxury);
+        }
+
+        .generator-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        #meme-input { display: none; }
+
+        .input-text {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+            padding: 16px 20px;
+            border-radius: 14px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-text:focus {
+            border-color: #ff3366;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .canvas-container {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #111115;
+            margin-bottom: 20px;
+            border: 1px dashed var(--border-subtle);
+            position: relative;
+            min-height: 200px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #meme-canvas {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .canvas-placeholder {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        #download-meme {
+            width: 100%;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border-subtle);
+            width: 100%;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <span class="badge">TRENDS & CREATION</span>
+    <h1>Meme Hub</h1>
+    <p>匯聚全球頂尖迷因熱度榜，並提供即時病毒式梗圖生成工具。</p>
+</header>
+
+<div class="container">
+    <div class="section-header">
+        <i class="fa-solid fa-fire-flame-curved"></i>
+        <span>即時趨勢熱度榜單</span>
+    </div>
+    <div id="meme-container"></div>
+
+    <div class="section-header">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <span>病毒式梗圖生成器</span>
+    </div>
+    <div class="generator-card">
+        <div class="canvas-container">
+            <canvas id="meme-canvas"></canvas>
+            <div class="canvas-placeholder" id="canvas-placeholder">
+                <i class="fa-solid fa-image" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
+                請先上傳您的圖片
+            </div>
+        </div>
+
+        <div class="generator-controls">
+            <div class="control-group">
+                <input type="file" id="meme-input" accept="image/*">
+                <label for="meme-input" class="btn btn-upload-label" aria-label="上傳圖片">
+                    <i class="fa-solid fa-upload"></i>
+                </label>
+                <input type="text" id="meme-top-text" class="input-text" placeholder="輸入頂部文字...">
+            </div>
+            <div class="control-group">
+                <input type="text" id="meme-bottom-text" class="input-text" placeholder="輸入底部文字...">
+            </div>
+        </div>
+
+        <button id="download-meme" class="btn btn-primary" disabled>
+            <i class="fa-solid fa-download"></i>
+            下載您的傑作
+        </button>
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 Meme Hub Premium. All rights reserved.</p>
+</footer>
+
+<script>
+    // 💡【自訂頭像通道】如果未來有自己的照片網址，把它貼在下面的引號內：
+    // 例如：const MY_CUSTOM_AVATAR = "https://i.imgur.com/xxxxxx.png";
+    const MY_CUSTOM_AVATAR = ""; 
+
+    // 安全載入客製化頭像邏輯 (就算沒填也絕對不報錯)
+    if (MY_CUSTOM_AVATAR && MY_CUSTOM_AVATAR.trim() !== "") {
+        try {
+            document.getElementById('dynamic-favicon').href = MY_CUSTOM_AVATAR;
+            document.getElementById('dynamic-apple-icon').href = MY_CUSTOM_AVATAR;
+        } catch(e) {
+            console.log("頭像載入失敗，使用系統預設安全圖標");
+        }
+    }
+
+    // 排行榜資料與安全渲染
+    const memeData = [
+        { id: "m-001", platform: "TikTok", title: "跨世代共鳴：當代職場行為學精選", imgUrl: "https://p16-comment-sign-sg.tiktokcdn.com/tos-alisg-i-zt8igodiya-sg/8fdc61dd7228454eb217a9a5caf035b5~tplv-jj85edgx6n-image-medium.jpeg?dr=8569&refresh_token=bf361e5c&x-expires=1782306000&x-signature=VgVuUcOf07ra4beC7OuYpIexTeA%3D&t=67a6c45e&ps=a0626fcd&shp=ff37627b&shcp=ff37627b&idc=my", heat: 2850 },
+        { id: "m-002", platform: "Imgur", title: "海外論壇高分神作：演算法的終極諷刺", imgUrl: "https://i.imgur.com/W4XdfyR_d.webp?maxwidth=520&shape=thumb&fidelity=high", heat: 2100 },
+        { id: "m-003", platform: "Facebook", title: "社群核心擴散：迷因骨灰級玩家經典複刻", imgUrl: "https://scontent-tpe1-1.xx.fbcdn.net/v/t39.30808-6/705122885_1580248270330103_7938124730336629191_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_ohc=qpAPk4p_USgQ7kNvwHVUPeT&_nc_oc=AdrQZ3J1c66HrP5BwuPTiG_naJ8NOUKL8xKSBxULQViB_fLCC51yu1qcqqN6InDx9pSg4oNYKm233BWcOYNFLcKU&_nc_zt=23&_nc_ht=scontent-tpe1-1.xx&_nc_gid=l9KN6LwrL93kGL_oSlsWcA&_nc_ss=7b2a8&oh=00_Af6He7FEU1-qhfZE-klrZeNtaGzTPajYvwSWBCa8YjUBrg&oe=6A1A25CF", heat: 1850 }
+    ];
+
+    const rankingContainer = document.getElementById('meme-container');
+
+    if (rankingContainer) {
+        memeData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'meme-card';
+            card.innerHTML = `
+                <div class="rank-tag">
+                    <i class="fa-solid fa-trophy" style="color: #ffca28;"></i>
+                    <span>TOP 0${index + 1}</span>
+                </div>
+                <div class="meme-viewport">
+                    <img src="${item.imgUrl}" class="meme-img" alt="Meme Media" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop'">
+                </div>
+                <div class="content-meta">
+                    <h3 class="meme-title"></h3>
+                    <div class="status-bar">
+                        <div class="heat-indicator">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>來源渠道: <strong class="meme-platform"></strong></span>
+                        </div>
+                        <div class="heat-indicator">
+                            <span>熱度權重:</span>
+                            <span class="heat-count"></span>
+                        </div>
+                    </div>
+                    <div class="action-group">
+                        <button class="btn btn-primary btn-vote" aria-label="投票支持">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span>UPVOTE</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            const titleNode = card.querySelector('.meme-title');
+            const platformNode = card.querySelector('.meme-platform');
+            if (titleNode) titleNode.textContent = item.title;
+            if (platformNode) platformNode.textContent = item.platform;
+            
+            const voteBtn = card.querySelector('.btn-vote');
+            const heatSpan = card.querySelector('.heat-count');
+            
+            if (heatSpan) heatSpan.textContent = item.heat.toLocaleString();
+
+            if (voteBtn && heatSpan) {
+                voteBtn.addEventListener('click', () => {
+                    item.heat++;
+                    heatSpan.textContent = item.heat.toLocaleString();
+                    voteBtn.disabled = true;
+                    voteBtn.style.background = '#16161e';
+                    voteBtn.innerHTML = `<span>已投 VERIFIED VISITOR VOTE</span>`;
+                    if (navigator.vibrate) navigator.vibrate(12);
+                });
+            }
+            rankingContainer.appendChild(card);
+        });
+    }
+
+    // 梗圖生成器安全封裝
+    const memeInput = document.getElementById('meme-input');
+    const memeTopText = document.getElementById('meme-top-text');
+    const memeBottomText = document.getElementById('meme-bottom-text');
+    const memeCanvas = document.getElementById('meme-canvas');
+    const canvasPlaceholder = document.getElementById('canvas-placeholder');
+    const downloadMeme = document.getElementById('download-meme');
+
+    if (memeCanvas) {
+        const ctx = memeCanvas.getContext('2d');
+        let originalImage = null;
+
+        if (memeInput) {
+            memeInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        originalImage = img;
+                        if (canvasPlaceholder) canvasPlaceholder.style.display = 'none';
+                        if (downloadMeme) downloadMeme.disabled = false;
+                        updateMemeCanvas();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        if (memeTopText) memeTopText.addEventListener('input', updateMemeCanvas);
+        if (memeBottomText) memeBottomText.addEventListener('input', updateMemeCanvas);
+
+        function updateMemeCanvas() {
+            if (!originalImage || !ctx) return;
+
+            memeCanvas.width = originalImage.width;
+            memeCanvas.height = originalImage.height;
+            ctx.drawImage(originalImage, 0, 0);
+
+            const fontSize = Math.floor(memeCanvas.height * 0.1);
+            ctx.font = `900 ${fontSize}px 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif`;
+            ctx.fillStyle = 'white';
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = Math.max(2, fontSize / 15);
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+
+            const topText = memeTopText ? memeTopText.value.toUpperCase() : "";
+            const bottomText = memeBottomText ? memeBottomText.value.toUpperCase() : "";
+
+            if (topText) {
+                ctx.strokeText(topText, memeCanvas.width / 2, 20);
+                ctx.fillText(topText, memeCanvas.width / 2, 20);
+            }
+
+            ctx.textBaseline = 'bottom';
+            if (bottomText) {
+                ctx.strokeText(bottomText, memeCanvas.width / 2, memeCanvas.height - 20);
+                ctx.fillText(bottomText, memeCanvas.width / 2, memeCanvas.height - 20);
+            }
+        }
+
+        if (downloadMeme) {
+            downloadMeme.addEventListener('click', () => {
+                if (!originalImage) return;
+                const dataURL = memeCanvas.toDataURL('image/jpeg', 0.9);
+                const a = document.createElement('a');
+                a.href = dataURL;
+                a.download = `MemeHub-${new Date().getTime()}.jpg`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        }
+    }
+</script>
+
+</body>
+</html>
